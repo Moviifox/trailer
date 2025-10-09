@@ -1,0 +1,298 @@
+<?php
+// PHP Code (ถ้าต้องการเพิ่มฟังก์ชันอื่นๆ สามารถเพิ่มได้)
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        #video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: black;
+        }
+        #video-player {
+            width: 100%;
+            height: 100%;
+        }
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 999;
+            display: flex;
+            gap: 10px;
+        }
+        .control-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .control-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .status-bar {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            color: white;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <video id="video-player" controls autoplay>
+            <source src="<?php
+// PHP Code (ถ้าต้องการเพิ่มฟังก์ชันอื่นๆ สามารถเพิ่มได้)
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        #video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: black;
+        }
+        #video-player {
+            width: 100%;
+            height: 100%;
+        }
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 999;
+            display: flex;
+            gap: 10px;
+        }
+        .control-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .control-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .status-bar {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            color: white;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <video id="video-player" controls autoplay>
+            <source src="https://sv1.getplay-cdn.com/files/c3427b15c22ce2bc1112a927d40e9b45/720/index" type="application/x-mpegURL">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="controls" id="controls">
+            <button class="control-btn" id="playPauseBtn">Play</button>
+            <button class="control-btn" id="skipForwardBtn">+10s</button>
+            <button class="control-btn" id="skipBackwardBtn">-10s</button>
+        </div>
+        <div class="status-bar" id="statusBar">
+            <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video-player');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const skipForwardBtn = document.getElementById('skipForwardBtn');
+        const skipBackwardBtn = document.getElementById('skipBackwardBtn');
+        const controls = document.getElementById('controls');
+        const statusBar = document.getElementById('statusBar');
+        const currentTimeElem = document.getElementById('currentTime');
+        const durationElem = document.getElementById('duration');
+
+        let controlTimeout;
+
+        // Toggle Play/Pause
+        playPauseBtn.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.textContent = 'Pause';
+            } else {
+                video.pause();
+                playPauseBtn.textContent = 'Play';
+            }
+            resetControlsTimeout();
+        });
+
+        // Skip Forward 10s
+        skipForwardBtn.addEventListener('click', () => {
+            video.currentTime += 10;
+            resetControlsTimeout();
+        });
+
+        // Skip Backward 10s
+        skipBackwardBtn.addEventListener('click', () => {
+            video.currentTime -= 10;
+            resetControlsTimeout();
+        });
+
+        // Update Video Time
+        video.addEventListener('timeupdate', () => {
+            const currentTime = formatTime(video.currentTime);
+            const duration = formatTime(video.duration);
+            currentTimeElem.textContent = currentTime;
+            durationElem.textContent = duration;
+        });
+
+        // Format Time to MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Reset Controls Timeout
+        function resetControlsTimeout() {
+            clearTimeout(controlTimeout);
+            controls.classList.remove('hidden');
+            controlTimeout = setTimeout(() => {
+                controls.classList.add('hidden');
+            }, 5000); // Hide controls after 5 seconds
+        }
+
+        // Show Controls on Video Hover
+        video.addEventListener('mouseenter', () => {
+            controls.classList.remove('hidden');
+            resetControlsTimeout();
+        });
+
+        video.addEventListener('mouseleave', () => {
+            resetControlsTimeout();
+        });
+
+        // Initialize Video Duration
+        video.addEventListener('loadedmetadata', () => {
+            const duration = formatTime(video.duration);
+            durationElem.textContent = duration;
+        });
+    </script>
+</body>
+</html>
+" type="application/x-mpegURL">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="controls" id="controls">
+            <button class="control-btn" id="playPauseBtn">Play</button>
+            <button class="control-btn" id="skipForwardBtn">+10s</button>
+            <button class="control-btn" id="skipBackwardBtn">-10s</button>
+        </div>
+        <div class="status-bar" id="statusBar">
+            <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video-player');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const skipForwardBtn = document.getElementById('skipForwardBtn');
+        const skipBackwardBtn = document.getElementById('skipBackwardBtn');
+        const controls = document.getElementById('controls');
+        const statusBar = document.getElementById('statusBar');
+        const currentTimeElem = document.getElementById('currentTime');
+        const durationElem = document.getElementById('duration');
+
+        let controlTimeout;
+
+        // Toggle Play/Pause
+        playPauseBtn.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.textContent = 'Pause';
+            } else {
+                video.pause();
+                playPauseBtn.textContent = 'Play';
+            }
+            resetControlsTimeout();
+        });
+
+        // Skip Forward 10s
+        skipForwardBtn.addEventListener('click', () => {
+            video.currentTime += 10;
+            resetControlsTimeout();
+        });
+
+        // Skip Backward 10s
+        skipBackwardBtn.addEventListener('click', () => {
+            video.currentTime -= 10;
+            resetControlsTimeout();
+        });
+
+        // Update Video Time
+        video.addEventListener('timeupdate', () => {
+            const currentTime = formatTime(video.currentTime);
+            const duration = formatTime(video.duration);
+            currentTimeElem.textContent = currentTime;
+            durationElem.textContent = duration;
+        });
+
+        // Format Time to MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Reset Controls Timeout
+        function resetControlsTimeout() {
+            clearTimeout(controlTimeout);
+            controls.classList.remove('hidden');
+            controlTimeout = setTimeout(() => {
+                controls.classList.add('hidden');
+            }, 5000); // Hide controls after 5 seconds
+        }
+
+        // Show Controls on Video Hover
+        video.addEventListener('mouseenter', () => {
+            controls.classList.remove('hidden');
+            resetControlsTimeout();
+        });
+
+        video.addEventListener('mouseleave', () => {
+            resetControlsTimeout();
+        });
+
+        // Initialize Video Duration
+        video.addEventListener('loadedmetadata', () => {
+            const duration = formatTime(video.duration);
+            durationElem.textContent = duration;
+        });
+    </script>
+</body>
+</html>
